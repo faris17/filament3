@@ -26,6 +26,8 @@ class EditClassroom extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('Add Subject')
+                ->url($this->getResource()::getUrl().'/'.$this->record->id.'/class'),
             Actions\DeleteAction::make(),
         ];
     }

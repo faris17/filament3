@@ -69,7 +69,7 @@ class ClassroomResource extends Resource
     public static function getRelations(): array
     {
         return [
-            SubjectsRelationManager::class
+            //
         ];
     }
 
