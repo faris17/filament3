@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CategoryNilaiResource\Pages;
 use App\Filament\Resources\CategoryNilaiResource\RelationManagers;
 use App\Models\CategoryNilai;
+use Filament\Actions\Contracts\HasLivewire;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\TextInput;
@@ -12,10 +13,12 @@ use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Contracts\HasTable;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Ramsey\Collection\Set as CollectionSet;
 
 class CategoryNilaiResource extends Resource
 {
@@ -24,6 +27,10 @@ class CategoryNilaiResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Category Nilai';
+
+    protected static ?string $navigationGroup = 'Source';
+
+    protected static ?int $navigationSort = 31;
 
     public static function form(Form $form): Form
     {
