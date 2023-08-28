@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\StudentResource\Widgets;
 
-use App\Filament\Resources\StudentResource\Pages\ListStudents;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;

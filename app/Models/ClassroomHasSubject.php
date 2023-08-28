@@ -13,8 +13,6 @@ class ClassroomHasSubject extends Model
 
     protected $table = 'classroom_subject';
 
-    protected $primaryKey = 'classroom_id';
-
     public function subjects(){
         return $this->belongsTo(Subject::class, 'subject_id', 'id');
     }
