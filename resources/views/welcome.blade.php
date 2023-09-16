@@ -19,10 +19,14 @@
               </span>
             </div>
 
-            <ul class='md:flex md:items-center z-[10] absolute md:z-auto md:static w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500 bg-slate-200 md:bg-transparent md:text-white'>
+            <ul id="navbar" class='md:flex md:items-center z-[10] absolute md:z-auto md:static w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500 bg-slate-200 md:bg-transparent md:text-white'>
                 <li class="hover:bg-slate-400 w-26 py-2 px-2 mx-2 rounded-full duration-500">Home</li>
                 <li class="hover:bg-slate-400 w-26 py-2 px-2 mx-2 rounded-full duration-500">About</li>
-                <li class="hover:bg-slate-400 w-26 py-2 px-2 mx-2 rounded-full duration-500">Register</li>
+                <li class="hover:bg-slate-400 w-26 py-2 px-2 mx-2 rounded-full duration-500">
+                    <a href="#register">
+                        Register
+                    </a>
+                </li>
             </ul>
        </div>
 
@@ -50,11 +54,42 @@
               </svg>
           </div>
   </div>
+
+  <div class="flex items-center justify-center h-screen bg-gray-300" id="register">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-1/2 mt-20">
+        <h1 class="text-2xl font-semibold mb-4">Registration</h1>
+        {{-- Form Here --}}
+        @livewire('home')
+    </div>
+  </div>
+
   <script>
      function Menu(e) {
             let list = document.querySelector('ul');
             e.name === 'menu' ? (e.name = "close", list.classList.add('top-[80px]'), list.classList.add('opacity-100')) : (e.name = "menu", list.classList.remove('top-[80px]'), list.classList.remove('opacity-100'))
         }
+
+    //register click
+    const navbarLinks = document.querySelectorAll("#navbar li");
+
+    navbarLinks.forEach((li) => {
+        li.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            const link = li.querySelector("a");
+                const targetId = link.getAttribute("href").substring(1); // Mengambil ID target
+                console.log(targetId);
+                const targetSection = document.getElementById(targetId);
+
+                if (targetSection) {
+                    const yOffset = targetSection.getBoundingClientRect().top;
+                    window.scrollBy({
+                        top: yOffset,
+                        behavior: 'smooth' // Menambahkan efek animasi
+                    });
+                }
+        });
+    });
   </script>
 </body>
 </html>

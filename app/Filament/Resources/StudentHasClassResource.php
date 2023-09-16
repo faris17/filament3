@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\StudentHasClassResource\Pages;
 use App\Filament\Resources\StudentHasClassResource\RelationManagers;
+use App\Models\Classroom;
 use App\Models\HomeRoom;
 use App\Models\Periode;
 use App\Models\Student;
@@ -19,6 +20,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class StudentHasClassResource extends Resource
 {
@@ -32,6 +34,18 @@ class StudentHasClassResource extends Resource
 
     protected static ?int $navigationSort = 23;
 
+    // protected static bool $shouldNavigationRegister = Auth::user()->email == 'admin@test.com' ? true :  false;
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        if(auth()->user()->can('classroom')){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -42,9 +56,9 @@ class StudentHasClassResource extends Resource
                             ->searchable()
                             ->options(Student::all()->pluck('name', 'id'))
                             ->label('Student'),
-                        Select::make('homerooms_id')
+                        Select::make('classrooms_id')
                             ->searchable()
-                            ->options(HomeRoom::all()->pluck('classroom.name', 'id'))
+                            ->options(Classroom::all()->pluck('name', 'id'))
                             ->label('Class'),
                         Select::make('periode_id')
                             ->label("Periode")
@@ -60,12 +74,12 @@ class StudentHasClassResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('students.name'),
-                TextColumn::make('homeroom.classroom.name'),
+                TextColumn::make('classrooms.name'),
                 TextColumn::make('periode.name')
             ])
             ->filters([
-                SelectFilter::make('homerooms_id')
-                    ->options(HomeRoom::all()->pluck('classroom.name', 'id')),
+                SelectFilter::make('classrooms_id')
+                    ->options(Classroom::all()->pluck('name', 'id')),
                 SelectFilter::make('periode_id')
                     ->options(Periode::all()->pluck('name', 'id'))
             ])

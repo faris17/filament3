@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class ClassroomResource extends Resource
 {
@@ -27,6 +28,14 @@ class ClassroomResource extends Resource
     // protected static bool $shouldRegisterNavigation = false;
 
     protected static ?int $navigationSort = 32;
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        if(auth()->user()->can('classroom'))
+            return true;
+        else
+            return false;
+    }
 
     public static function form(Form $form): Form
     {
@@ -69,7 +78,7 @@ class ClassroomResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            SubjectsRelationManager::class
         ];
     }
 
